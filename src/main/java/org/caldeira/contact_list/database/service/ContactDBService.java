@@ -17,7 +17,7 @@ public class ContactDBService {
     }
 
     public List<ContactDB> findByEMail(String eMail) {
-        return this.repository.findByEMailOrderByNameAsc(eMail);
+        return this.repository.findByeMailOrderByNameAsc(eMail);
     }
 
     public List<ContactDB> findByPhoneNumber(String phoneNumber) {

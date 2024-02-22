@@ -8,7 +8,7 @@ import java.util.List;
 public interface ContactDBRepository extends JpaRepository<ContactDB, Long> {
 
     List<ContactDB> findByNameOrderByNameAsc(String name);
-    List<ContactDB> findByEMailOrderByNameAsc(String eMail);
+    List<ContactDB> findByeMailOrderByNameAsc(String eMail);
     List<ContactDB> findByPhoneNumberOrderByNameAsc(String phoneNumber);
 
 }

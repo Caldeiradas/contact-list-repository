@@ -13,7 +13,7 @@ public class ContactTextInterface {
     private IContactService contactService;
 
     public void init() {
-
+        this.mainMenu();
     }
 
     private void mainMenu() {
@@ -98,12 +98,12 @@ public class ContactTextInterface {
     private String getContactPhoneNumber() {
         String phoneNumber;
         Scanner scan = new Scanner(System.in);
-        System.out.println("Desired Contact phone number?");
-        phoneNumber = scan.nextLine().replaceAll("[^0-9+*#]", ""); // 913 141-545
+        System.out.println("Desired Contact phone number? (With country code)");
+        phoneNumber = scan.nextLine().replaceAll("[^0-9+*#]", "");
         System.out.println(phoneNumber);
         if (!phoneNumber.isEmpty()
                 && (phoneNumber.length() < 3 || phoneNumber.length() > 6)
-                && !phoneNumber.matches("^\\+[0-9]{1,3}\\.[0-9]{4,14}(?:x.+)?$")) {
+                && !phoneNumber.matches("^\\+(?:[0-9]?){6,14}[0-9]$")) {
             System.out.printf("Phone number is invalid: [%s]%n", phoneNumber);
             phoneNumber = this.getContactPhoneNumber();
         }
