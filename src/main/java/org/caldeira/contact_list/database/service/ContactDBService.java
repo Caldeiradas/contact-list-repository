@@ -12,16 +12,24 @@ public class ContactDBService {
     @Autowired
     private ContactDBRepository repository;
 
+    public List<ContactDB> findAll() {
+        return this.repository.findAll();
+    }
+
     public List<ContactDB> findByName(String name) {
         return this.repository.findByNameOrderByNameAsc(name);
     }
 
-    public List<ContactDB> findByEMail(String eMail) {
-        return this.repository.findByeMailOrderByNameAsc(eMail);
+    public List<ContactDB> findFromName(String name){
+        return this.repository.findByNameContainsOrderByNameAsc(name);
+    }
+
+    public List<ContactDB> findFromEMail(String eMail) {
+        return this.repository.findByeMailContainsOrderByNameAsc(eMail);
     }
 
     public List<ContactDB> findByPhoneNumber(String phoneNumber) {
-        return this.repository.findByNameOrderByNameAsc(phoneNumber);
+        return this.repository.findByPhoneNumberContainsOrderByNameAsc(phoneNumber);
     }
 
     public ContactDB save(ContactDB contactDB) {

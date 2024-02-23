@@ -5,7 +5,10 @@ import org.caldeira.contact_list.controller.service.IContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class ContactTextInterface {
@@ -21,32 +24,76 @@ public class ContactTextInterface {
         boolean validOption;
         while (true) {
             System.out.println("What do you pretend? (please choose one of the option below)\n" +
-                "1. Add Contact\n" +
-                "2. Search Contact\n" +
-                "3. Close the program");
-            do {
-                String input = scan.next();
-                validOption = true;
-                switch (input) {
-                    case "1" -> addContact();
-                    case "2" -> searchContact();
-                    case "3" -> {
-                        System.out.println("Good bye!");
-                        return;
-                    }
-                    default -> {
-                        invalidOption(input, 2);
-                        validOption = false;
-                    }
+                    "1. Add Contact\n" +
+                    "2. Search Contact\n" +
+                    "3. Close the program");
+            String input = scan.next();
+            switch (input) {
+                case "1" -> addContact();
+                case "2" -> searchContact();
+                case "3" -> {
+                    System.out.println("Good bye!");
+                    return;
                 }
-            } while (!validOption);
+                default -> invalidOption(input, 2);
+            }
         }
     }
 
     private void searchContact() {
-
+        Scanner scan = new Scanner(System.in);
+        do {
+            System.out.println("How do you pretend to search? (please choose one of the option below)\n" +
+                    "1. Provide all\n" +
+                    "2. Search by name\n" +
+                    "3. Search by phone number\n" +
+                    "4. Search by e-mail\n" +
+                    "5. Go back");
+            String input = scan.next();
+            List<Contact> foundContacts = null;
+            switch (input) {
+                case "1" -> foundContacts = findAll();
+                case "2" -> foundContacts = findFromName();
+                case "3" -> foundContacts = findByPhoneNumber();
+                case "4" -> foundContacts = findFromEMail();
+                case "5" -> {
+                    return;
+                }
+                default -> invalidOption(input, 5);
+            }
+            if (foundContacts != null) {
+                printContactList(foundContacts);
+            } else if(foundContacts.isEmpty()){
+                System.out.println("No contact was found");
+            }
+        } while (true);
     }
 
+    // GET
+    private List<Contact> findAll() {
+        return this.contactService.getAllContacts();
+    }
+
+
+    private List<Contact> findFromName() {
+        System.out.print("Name to search by: ");
+        Scanner scan = new Scanner(System.in);
+        return this.contactService.getContactFromName(scan.nextLine());
+    }
+
+    private List<Contact> findByPhoneNumber() {
+        System.out.print("Phone number to search by: ");
+        Scanner scan = new Scanner(System.in);
+        return this.contactService.getContactByPhone(scan.nextLine().replaceAll("[^0-9+*#]", ""));
+    }
+
+    private List<Contact> findFromEMail() {
+        System.out.print("E-mail to search by: ");
+        Scanner scan = new Scanner(System.in);
+        return this.contactService.getContactFromEMail(scan.nextLine().replaceAll("\\s", "").toLowerCase());
+    }
+
+    // POST
     private void addContact() {
         Contact contact = new Contact();
         this.fillContact(contact);
@@ -158,10 +205,16 @@ public class ContactTextInterface {
         return String.format(
                 "Name:              [%s]\n" +
                         "Phone Number:      [%s]\n" +
-                        "E-Mail Address:    [%s]",
+                        "E-Mail Address:    [%s]\n" +
+                        "-----",
                 contact.getName(), contact.getPhoneNumber(), contact.getEMail()
         );
 
+    }
+
+    private void printContactList(List<Contact> contactList) {
+        Stream<String> contactStream = contactList.stream().map(this::formattedContact);
+        contactStream.forEach(System.out::println);
     }
 
     private void invalidOption(String input, int lastOption) {

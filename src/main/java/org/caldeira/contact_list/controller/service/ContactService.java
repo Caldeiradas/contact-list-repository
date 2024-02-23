@@ -33,8 +33,19 @@ public class ContactService implements IContactService {
     }
 
     @Override
+    public List<Contact> getAllContacts(){
+        return this.contactDBListToContactList(this.contactDBService.findAll());
+    }
+
+    @Override
     public List<Contact> getContactByName (String name){
         List<ContactDB> contactDBList = this.contactDBService.findByName(name);
+        return this.contactDBListToContactList(contactDBList);
+    }
+
+    @Override
+    public List<Contact> getContactFromName (String name){
+        List<ContactDB> contactDBList = this.contactDBService.findFromName(name);
         return this.contactDBListToContactList(contactDBList);
     }
 
@@ -45,12 +56,13 @@ public class ContactService implements IContactService {
     }
 
     @Override
-    public List<Contact> getContactByEMail(String eMail){
-        List<ContactDB> contactDBList= this.contactDBService.findByEMail(eMail);
+    public List<Contact> getContactFromEMail(String eMail){
+        List<ContactDB> contactDBList= this.contactDBService.findFromEMail(eMail);
         return this.contactDBListToContactList(contactDBList);
     }
 
-    private List<Contact> contactDBListToContactList(List<ContactDB> contactDBList){
+    @Override
+    public List<Contact> contactDBListToContactList(List<ContactDB> contactDBList){
         return contactDBList.stream().map(cdb -> this.mapper.contactDBToContact(cdb)).collect(Collectors.toList());
     }
 }
