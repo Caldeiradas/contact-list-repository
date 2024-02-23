@@ -1,0 +1,18 @@
+spring:
+  jpa:
+    # Avoid LazyInitalizationException issues.
+    open-in-view: false
+    show-sql: false
+    properties.hibernate:
+      generate_statistics: false
+      format_sql: true
+      # Fix for LazyInitializationException
+      enable_lazy_load_no_trans: true
+      # Allows merging of multiple representations of the same entity (NOT HELPING)
+      #event.merge.entity_copy_observer: allow
+    generate-ddl: true
+    # Hibernate ddl auto (create, create-drop, validate, update)
+    hibernate:
+      ddl-auto: update
+      naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      use-new-id-generator-mappings: true

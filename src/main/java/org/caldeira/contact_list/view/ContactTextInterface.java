@@ -18,23 +18,29 @@ public class ContactTextInterface {
 
     private void mainMenu() {
         Scanner scan = new Scanner(System.in);
-
-        System.out.println("What do you pretend? (please choose one of the option below)\n" +
-                "1. Add Contact\n" +
-                "2. Search Contact");
         boolean validOption;
-        do {
-            String input = scan.next();
-            validOption = true;
-            switch (input) {
-                case "1" -> addContact();
-                case "2" -> searchContact();
-                default -> {
-                    invalidOption(input, 2);
-                    validOption = false;
+        while (true) {
+            System.out.println("What do you pretend? (please choose one of the option below)\n" +
+                "1. Add Contact\n" +
+                "2. Search Contact\n" +
+                "3. Close the program");
+            do {
+                String input = scan.next();
+                validOption = true;
+                switch (input) {
+                    case "1" -> addContact();
+                    case "2" -> searchContact();
+                    case "3" -> {
+                        System.out.println("Good bye!");
+                        return;
+                    }
+                    default -> {
+                        invalidOption(input, 2);
+                        validOption = false;
+                    }
                 }
-            }
-        } while (!validOption);
+            } while (!validOption);
+        }
     }
 
     private void searchContact() {
