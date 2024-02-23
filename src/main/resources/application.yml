@@ -1,4 +1,9 @@
 spring:
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@192.168.1.76:1521:ORCLCDB
+    username: system
+    password: Oracle_123
   jpa:
     # Avoid LazyInitalizationException issues.
     open-in-view: false

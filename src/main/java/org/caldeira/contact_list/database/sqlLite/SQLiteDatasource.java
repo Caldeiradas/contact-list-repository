@@ -1,3 +1,4 @@
+/*
 package org.caldeira.contact_list.database.sqlLite;
 
 import org.springframework.context.annotation.Bean;
@@ -31,4 +32,4 @@ public class SQLiteDatasource {
     @PropertySource("classpath:persistence.properties")
     static class SqliteConfig {
     }
-}
+}*/
