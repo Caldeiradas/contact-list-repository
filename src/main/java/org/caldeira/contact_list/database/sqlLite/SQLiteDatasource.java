@@ -1,3 +1,5 @@
+//Uncomment this to use a SQLite DataBase.
+
 /*
 package org.caldeira.contact_list.database.sqlLite;
 

@@ -1,6 +1,5 @@
 package org.caldeira.contact_list.controller.service;
 
-
 import org.caldeira.contact_list.controller.mapper.IMapStructMapper;
 import org.caldeira.contact_list.controller.model.Contact;
 import org.caldeira.contact_list.database.model.ContactDB;
