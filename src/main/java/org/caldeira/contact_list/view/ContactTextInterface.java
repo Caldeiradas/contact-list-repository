@@ -23,7 +23,7 @@ public class ContactTextInterface {
         Scanner scan = new Scanner(System.in);
         boolean validOption;
         while (true) {
-            System.out.println("What do you pretend? (please choose one of the option below)\n" +
+            System.out.println("\nWhat do you pretend? (please choose one of the option below)\n" +
                     "1. Add Contact\n" +
                     "2. Search Contact\n" +
                     "3. Close the program");
@@ -43,7 +43,7 @@ public class ContactTextInterface {
     private void searchContact() {
         Scanner scan = new Scanner(System.in);
         do {
-            System.out.println("How do you pretend to search? (please choose one of the option below)\n" +
+            System.out.println("\nHow do you pretend to search? (please choose one of the option below)\n" +
                     "1. Provide all\n" +
                     "2. Search by name\n" +
                     "3. Search by phone number\n" +
@@ -110,7 +110,7 @@ public class ContactTextInterface {
 
     private void validateContact(Contact contact) {
         if (contact.getPhoneNumber().isEmpty() && contact.getEMail().isEmpty()) {
-            System.out.println("Both phone number and e-mail are empty. At least one must be filled.\n" +
+            System.out.println("\nBoth phone number and e-mail are empty. At least one must be filled.\n" +
                     "1. Fill phone number\n" +
                     "2. Fill e-mail\n" +
                     "3. Fill both");
@@ -213,8 +213,11 @@ public class ContactTextInterface {
     }
 
     private void printContactList(List<Contact> contactList) {
-        Stream<String> contactStream = contactList.stream().map(this::formattedContact);
-        contactStream.forEach(System.out::println);
+        System.out.println("\nCONTACT LIST: ");
+        contactList
+                .stream()
+                .map(this::formattedContact)
+                .forEach(System.out::println);
     }
 
     private void invalidOption(String input, int lastOption) {
